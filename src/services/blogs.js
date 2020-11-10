@@ -12,8 +12,13 @@ const create = async (payload, user) => {
       authorization: `Bearer ${user.token}`
     }
   }
-  const response = await axios.post(baseUrl, payload, config);
-  return response.data;
+
+  try{
+    const response = await axios.post(baseUrl, payload, config);
+    return response.data;
+  } catch(error){
+		throw error.response.data.error;
+	}
 };
 
 export default { getAll, create }

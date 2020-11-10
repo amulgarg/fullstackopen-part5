@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import blogService from '../services/blogs';
 
-const BlogForm = ({user}) => {
+const BlogForm = ({user, setSuccessMessage, setErrorMessage}) => {
 	const [title, setTitle] = useState('');
 	const [author, setAuthor] = useState('');
 	const [url, setUrl] = useState('');
@@ -18,9 +18,14 @@ const BlogForm = ({user}) => {
 		setUrl(event.target.value);
 	}
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		blogService.create({title, author, url}, user);
+		try{
+			const newBlog = await blogService.create({title, author, url}, user);
+			setSuccessMessage(`A new blog ${newBlog.title} by ${newBlog.author} added!`)
+		}catch(error){
+			setErrorMessage(error);
+		}
 	}
 
 	return <div>

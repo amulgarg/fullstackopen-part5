@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import loginService from '../services/login';
 
-const LoginForm = ({user, onLogin}) => {
+const LoginForm = ({user, onLogin, setSuccessMessage, setErrorMessage}) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -21,8 +21,9 @@ const LoginForm = ({user, onLogin}) => {
 			window.localStorage.setItem('user', JSON.stringify(user));
 			console.log('user', user);
 			onLogin(user);
+			setSuccessMessage(`user ${user.name} successfully logged in`);
 		}catch(error){
-			alert(error);
+			setErrorMessage(error);
 		}
 	}
 
