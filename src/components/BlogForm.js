@@ -5,6 +5,7 @@ const BlogForm = ({user, setSuccessMessage, setErrorMessage}) => {
 	const [title, setTitle] = useState('');
 	const [author, setAuthor] = useState('');
 	const [url, setUrl] = useState('');
+	const [visible, setVisibility] = useState(false);
 
 	const onTitleChange = (event) => {
 		setTitle(event.target.value);
@@ -25,7 +26,17 @@ const BlogForm = ({user, setSuccessMessage, setErrorMessage}) => {
 			setSuccessMessage(`A new blog ${newBlog.title} by ${newBlog.author} added!`)
 		}catch(error){
 			setErrorMessage(error);
+		}finally{
+			setVisibility(false);
 		}
+	}
+
+	const handleCreateNote = () => {
+		setVisibility(true);
+	}
+
+	if(!visible){
+		return <button onClick={handleCreateNote}>create new blog</button>
 	}
 
 	return <div>
