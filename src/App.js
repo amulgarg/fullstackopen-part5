@@ -12,12 +12,12 @@ const App = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   let sortedBlogs = [...blogs];
-  sortedBlogs.sort((a,b) => {
-    if(a.likes < b.likes){
+  sortedBlogs.sort((a, b) => {
+    if (a.likes < b.likes) {
       return 1;
     }
 
-    if(b.likes < a.likes){
+    if (b.likes < a.likes) {
       return -1;
     }
 
@@ -26,8 +26,8 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+      setBlogs(blogs)
+    )
   }, []);
 
   const setUserOnLogin = (user) => {
@@ -38,26 +38,26 @@ const App = () => {
     window.localStorage.removeItem('user');
     setSuccessMessage(null);
     setErrorMessage(null);
-		setUserOnLogin(null);
+    setUserOnLogin(null);
   }
-  
+
   console.log('sorted blogs', sortedBlogs);
 
   return (
     <div>
       <h2>blogs</h2>
-      {successMessage? <div className="success-message">{successMessage}</div>: null}
-      {errorMessage? <div className="error-message">{errorMessage}</div>: null}
+      {successMessage ? <div className="success-message">{successMessage}</div> : null}
+      {errorMessage ? <div className="error-message">{errorMessage}</div> : null}
 
       {!user && <LoginForm user={user} onLogin={setUserOnLogin} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage} />}
 
       {user && <div>
         <div>{user.name} logged in <button onClick={logout}>logout</button></div>
-        <br/>
-        <BlogForm user={user} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage}/>
-        <br/>
+        <br />
+        <BlogForm user={user} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage} />
+        <br />
         {sortedBlogs.sort(blog => blog.likes).map(blog =>
-          <Blog key={blog.id} blog={blog} user={user}/>
+          <Blog key={blog.id} blog={blog} user={user} />
         )}
       </div>}
     </div>
