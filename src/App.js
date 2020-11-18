@@ -11,6 +11,18 @@ const App = () => {
   const [user, setUser] = useState(loggedInUser);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  let sortedBlogs = [...blogs];
+  sortedBlogs.sort((a,b) => {
+    if(a.likes < b.likes){
+      return 1;
+    }
+
+    if(b.likes < a.likes){
+      return -1;
+    }
+
+    return 0;
+  });
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -27,7 +39,9 @@ const App = () => {
     setSuccessMessage(null);
     setErrorMessage(null);
 		setUserOnLogin(null);
-	}
+  }
+  
+  console.log('sorted blogs', sortedBlogs);
 
   return (
     <div>
@@ -42,8 +56,8 @@ const App = () => {
         <br/>
         <BlogForm user={user} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage}/>
         <br/>
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+        {sortedBlogs.sort(blog => blog.likes).map(blog =>
+          <Blog key={blog.id} blog={blog} user={user}/>
         )}
       </div>}
     </div>

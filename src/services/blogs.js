@@ -21,4 +21,32 @@ const create = async (payload, user) => {
 	}
 };
 
-export default { getAll, create }
+const update = async (blogId, payload) => {
+  
+  try{
+    const response = await axios.put(`${baseUrl}/${blogId}`, payload);
+    return response.data;
+  } catch(error){
+		throw error.response.data.error;
+  }
+  
+};
+
+const remove = async (blogId, user) => {
+  
+  const config = {
+    headers: {
+      authorization: `Bearer ${user.token}`
+    }
+  }
+
+  try{
+    const response = await axios.delete(`${baseUrl}/${blogId}`, config);
+    return response.data;
+  } catch(error){
+		throw error.response.data.error;
+  }
+  
+};
+
+export default { getAll, create, update, remove }

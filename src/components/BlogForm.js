@@ -36,7 +36,7 @@ const BlogForm = ({user, setSuccessMessage, setErrorMessage}) => {
 	}
 
 	if(!visible){
-		return <button onClick={handleCreateNote}>create new blog</button>
+		return <button onClick={handleCreateNote}>Create new blog</button>
 	}
 
 	return <div>
