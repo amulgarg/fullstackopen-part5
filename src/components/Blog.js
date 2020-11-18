@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'
 import blogService from '../services/blogs';
 const Blog = ({ blog, user }) => {
 
@@ -19,10 +20,10 @@ const Blog = ({ blog, user }) => {
   console.log('blog', blog);
 
   const handleLike = () => {
-    const payload = {...blog, likes: blog.likes + 1, user: blog.user.id};
+    const payload = { ...blog, likes: blog.likes + 1, user: blog.user.id };
     blogService.update(blog.id, payload);
   }
-  
+
   const handleRemove = () => {
     const shouldDelete = window.confirm(`Remove ${blog.title}?`);
     if(shouldDelete){
@@ -32,7 +33,7 @@ const Blog = ({ blog, user }) => {
   }
 
   return <div style={blogStyle}>
-    {blog.title} 
+    {blog.title}
     <button onClick={handleToggleViewDetails}>view</button>
     {showDetails && <div>
       <p>{blog.url}</p>
@@ -43,4 +44,9 @@ const Blog = ({ blog, user }) => {
   </div>
 };
 
-export default Blog
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
+}
+
+export default Blog;
