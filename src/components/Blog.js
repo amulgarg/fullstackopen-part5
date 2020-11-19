@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'
 import blogService from '../services/blogs';
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog, user, likeHandler }) => {
 
   const [showDetails, setDetailsVisibility] = useState(false);
 
@@ -17,11 +17,10 @@ const Blog = ({ blog, user }) => {
     marginBottom: 5
   }
 
-  console.log('blog', blog);
-
   const handleLike = () => {
     const payload = { ...blog, likes: blog.likes + 1, user: blog.user.id };
     blogService.update(blog.id, payload);
+    if(likeHandler) likeHandler();
   }
 
   const handleRemove = () => {
@@ -33,11 +32,10 @@ const Blog = ({ blog, user }) => {
   }
 
   return <div style={blogStyle}>
-    {blog.title}
-    <button onClick={handleToggleViewDetails}>view</button>
+    <div className="heading">{blog.title} {blog.author} <button onClick={handleToggleViewDetails} className="view">view</button> </div>
     {showDetails && <div>
-      <p>{blog.url}</p>
-      <p>Likes: {blog.likes} <button onClick={handleLike}>like</button></p>
+      <p className="url">{blog.url}</p>
+      <p className="likes">Likes: {blog.likes} <button onClick={handleLike} className="like">like</button></p>
       <p>{blog.author}</p>
       <button onClick={handleRemove}>Remove</button>
     </div>}

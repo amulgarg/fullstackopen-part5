@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import blogService from '../services/blogs';
 
-const BlogForm = ({ user, setSuccessMessage, setErrorMessage }) => {
+const BlogForm = ({ user, setSuccessMessage, setErrorMessage, onSubmitHandler }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -20,6 +20,10 @@ const BlogForm = ({ user, setSuccessMessage, setErrorMessage }) => {
   }
 
   const handleSubmit = async (event) => {
+    if(onSubmitHandler){
+      onSubmitHandler({ title, author, url });
+      return;
+    }
     event.preventDefault();
     try{
       const newBlog = await blogService.create({ title, author, url }, user);
@@ -36,15 +40,15 @@ const BlogForm = ({ user, setSuccessMessage, setErrorMessage }) => {
   }
 
   if(!visible){
-    return <button onClick={handleCreateNote}>Create new blog</button>
+    return <button onClick={handleCreateNote} className="create">Create new blog</button>
   }
 
   return <div>
     <h3>Create New</h3>
     <form onSubmit={handleSubmit}>
-      <div>title: <input type="text" value={title} onChange={onTitleChange}/></div>
-      <div>author: <input type="text" value={author} onChange={onAuthorChange}/></div>
-      <div>url: <input type="text" value={url} onChange={onUrlChange}/></div>
+      <div>title: <input type="text" value={title} onChange={onTitleChange} id="title"/></div>
+      <div>author: <input type="text" value={author} onChange={onAuthorChange} id="author"/></div>
+      <div>url: <input type="text" value={url} onChange={onUrlChange} id="url"/></div>
       <button type="submit">Create</button>
     </form>
   </div>
