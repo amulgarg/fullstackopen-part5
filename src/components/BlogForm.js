@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import blogService from '../services/blogs';
 
-const BlogForm = ({ user, setSuccessMessage, setErrorMessage, onSubmitHandler }) => {
+const BlogForm = ({ user, setSuccessMessage, setErrorMessage, onSubmitHandler, onSuccess }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -27,7 +27,8 @@ const BlogForm = ({ user, setSuccessMessage, setErrorMessage, onSubmitHandler })
     event.preventDefault();
     try{
       const newBlog = await blogService.create({ title, author, url }, user);
-      setSuccessMessage(`A new blog ${newBlog.title} by ${newBlog.author} added!`)
+      setSuccessMessage(`A new blog ${newBlog.title} by ${newBlog.author} added!`);
+      onSuccess();
     }catch(error){
       setErrorMessage(error);
     }finally{
@@ -49,7 +50,7 @@ const BlogForm = ({ user, setSuccessMessage, setErrorMessage, onSubmitHandler })
       <div>title: <input type="text" value={title} onChange={onTitleChange} id="title"/></div>
       <div>author: <input type="text" value={author} onChange={onAuthorChange} id="author"/></div>
       <div>url: <input type="text" value={url} onChange={onUrlChange} id="url"/></div>
-      <button type="submit">Create</button>
+      <button type="submit" id="submit-blog-form">Create</button>
     </form>
   </div>
 };

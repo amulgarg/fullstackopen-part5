@@ -29,15 +29,15 @@ const LoginForm = ({ onLogin, setSuccessMessage, setErrorMessage }) => {
 
   return <div>
     <h2>Login to the application</h2>
-    <form onSubmit={loginUser}>
+    <form onSubmit={loginUser} id="login-form">
       <div>
-		name: <input value={username} onChange={handleUsernameChange}/>
+		name: <input value={username} onChange={handleUsernameChange} id="username"/>
       </div>
       <div>
-		password: <input type="password" value={password} onChange={handlePasswordChange}/>
+		password: <input type="password" value={password} onChange={handlePasswordChange} id="password"/>
       </div>
       <div>
-        <button type="submit">Login</button>
+        <button type="submit" id="login-submit">Login</button>
       </div>
     </form>
   </div>

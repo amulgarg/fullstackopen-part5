@@ -41,6 +41,12 @@ const App = () => {
     setUserOnLogin(null);
   }
 
+  const onCreateBlogSuccess = () => {
+    blogService.getAll().then(blogs =>
+      setBlogs(blogs)
+    );
+  }
+
   console.log('sorted blogs', sortedBlogs);
 
   return (
@@ -54,7 +60,7 @@ const App = () => {
       {user && <div>
         <div>{user.name} logged in <button onClick={logout}>logout</button></div>
         <br />
-        <BlogForm user={user} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage} />
+        <BlogForm user={user} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage} onSuccess={onCreateBlogSuccess}/>
         <br />
         {sortedBlogs.sort(blog => blog.likes).map(blog =>
           <Blog key={blog.id} blog={blog} user={user} />

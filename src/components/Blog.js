@@ -31,13 +31,13 @@ const Blog = ({ blog, user, likeHandler }) => {
     //deleting logic
   }
 
-  return <div style={blogStyle}>
+  return <div style={blogStyle} id={blog.url} data-blogid={blog.id} className="blog">
     <div className="heading">{blog.title} {blog.author} <button onClick={handleToggleViewDetails} className="view">view</button> </div>
     {showDetails && <div>
       <p className="url">{blog.url}</p>
       <p className="likes">Likes: {blog.likes} <button onClick={handleLike} className="like">like</button></p>
       <p>{blog.author}</p>
-      <button onClick={handleRemove}>Remove</button>
+      <button onClick={handleRemove} className="remove">Remove</button>
     </div>}
   </div>
 };
